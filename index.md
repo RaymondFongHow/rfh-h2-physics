@@ -17,4 +17,4 @@ Welcome! This site hosts H2 Physics teaching materials and past papers.
 - [Rotational Motion (PDF)](Newtonian%20Mechanics/H2%20Physics%20-%20Rotational%20Motion.pdf)
 
 ## Past Papers
-Past papers are in the `Past Papers/` folder in this repo. I can build a browsable index page next.
+- [Past Papers Index](past-papers.html)
