@@ -1,0 +1,32 @@
+Notebook[
+ {
+  Cell["Projectile Motion in 2D with Air Drag", "Title"],
+  Cell["This notebook simulates 2D projectile motion with quadratic air drag and compares it to the no-drag case.", "Text"],
+
+  Cell["Setup", "Section"],
+  Cell[BoxData[
+    "If[NotebookDirectory[] =!= $Failed, SetDirectory[NotebookDirectory[]]];\n\nClearAll[simulateProjectile];\nOptions[simulateProjectile] = {\n  \"g\" -> 9.81,          (* m/s^2 *)\n  \"m\" -> 0.145,         (* kg *)\n  \"c\" -> 0.02,          (* drag coefficient *)\n  \"DragLaw\" -> \"quadratic\",\n  \"tmax\" -> 20\n};\n\nsimulateProjectile[v0_, thetaDeg_, opts : OptionsPattern[]] := Module[\n  {g = OptionValue[\"g\"], m = OptionValue[\"m\"], c = OptionValue[\"c\"],\n   dragLaw = OptionValue[\"DragLaw\"], tmax = OptionValue[\"tmax\"],\n   \[Theta], drag, sol, rfun, tEnd},\n\n  \[Theta] = thetaDeg Degree;\n\n  drag[v_] := Which[\n    dragLaw === \"linear\", -c v,\n    dragLaw === \"quadratic\", -c v Norm[v],\n    True, -c v Norm[v]\n  ];\n\n  sol = NDSolve[\n    {\n      r''[t] == drag[r'[t]]/m + {0, -g},\n      r[0] == {0, 0},\n      r'[0] == v0 {Cos[\[Theta]], Sin[\[Theta]]},\n      WhenEvent[r[t][[2]] <= 0 && t > 0, \"StopIntegration\"]\n    },\n    r,\n    {t, 0, tmax},\n    MaxStepFraction -> 1/200\n  ];\n\n  rfun = r /. First@sol;\n  tEnd = Last@rfun[\"Domain\"][[1]];\n\n  <|\"Solution\" -> rfun, \"tEnd\" -> tEnd|>\n];"
+  ], "Input"],
+
+  Cell["Parameters", "Section"],
+  Cell[BoxData[
+    "v0 = 35;    (* m/s *)\n\ntheta = 50; (* degrees *)\n\nsimDrag = simulateProjectile[v0, theta, \"c\" -> 0.02, \"DragLaw\" -> \"quadratic\"];\nsimNoDrag = simulateProjectile[v0, theta, \"c\" -> 0.0, \"DragLaw\" -> \"quadratic\"];"
+  ], "Input"],
+
+  Cell["Trajectory Comparison", "Section"],
+  Cell[BoxData[
+    "trajDrag = ParametricPlot[\n  Evaluate[simDrag[\"Solution\"][t]],\n  {t, 0, simDrag[\"tEnd\"]},\n  PlotStyle -> {Thick, RGBColor[0.85, 0.2, 0.1]},\n  PlotRange -> All\n];\n\ntrajNoDrag = ParametricPlot[\n  Evaluate[simNoDrag[\"Solution\"][t]],\n  {t, 0, simNoDrag[\"tEnd\"]},\n  PlotStyle -> {Dashed, Thick, RGBColor[0.1, 0.3, 0.8]},\n  PlotRange -> All\n];\n\ncomparisonPlot = Show[\n  trajDrag,\n  trajNoDrag,\n  Frame -> True,\n  FrameLabel -> {\"x (m)\", \"y (m)\"},\n  PlotRange -> All,\n  ImageSize -> 700,\n  PlotLegends -> Placed[LineLegend[{\"Quadratic drag\", \"No drag\"}], {0.75, 0.8}]\n];\n\ncomparisonPlot"
+  ], "Input"],
+
+  Cell["Interactive Manipulate", "Section"],
+  Cell[BoxData[
+    "Manipulate[\n  Module[{simD, simND, trajD, trajND, tt},\n    simD = simulateProjectile[v0, theta, \"c\" -> c, \"DragLaw\" -> dragLaw];\n    simND = simulateProjectile[v0, theta, \"c\" -> 0.0, \"DragLaw\" -> dragLaw];\n\n    trajD = ParametricPlot[\n      Evaluate[simD[\"Solution\"][\\[Tau]]],\n      {\\[Tau], 0, simD[\"tEnd\"]},\n      PlotStyle -> {Thick, RGBColor[0.85, 0.2, 0.1]},\n      PlotRange -> All\n    ];\n\n    trajND = ParametricPlot[\n      Evaluate[simND[\"Solution\"][\\[Tau]]],\n      {\\[Tau], 0, simND[\"tEnd\"]},\n      PlotStyle -> {Dashed, Thick, RGBColor[0.1, 0.3, 0.8]},\n      PlotRange -> All\n    ];\n\n    tt = t * simD[\"tEnd\"];\n\n    Show[\n      trajD,\n      If[showNoDrag, trajND, Graphics[{}]],\n      Graphics[{RGBColor[0.85, 0.2, 0.1], PointSize[Large], Point[simD[\"Solution\"][tt]]}],\n      Frame -> True,\n      FrameLabel -> {\"x (m)\", \"y (m)\"},\n      PlotRange -> All,\n      ImageSize -> 700,\n      PlotLegends -> Placed[LineLegend[{\"Drag\", \"No drag\"}], {0.75, 0.8}]\n    ]\n  ],\n  {{v0, 35, \"v0 (m/s)\"}, 5, 60, 1},\n  {{theta, 50, \"theta (deg)\"}, 10, 80, 1},\n  {{c, 0.02, \"drag c\"}, 0, 0.1, 0.002},\n  {{dragLaw, \"quadratic\", \"drag law\"}, {\"quadratic\", \"linear\"}},\n  {{showNoDrag, True, \"show no-drag\"}, {True, False}},\n  {{t, 0, \"flight progress\"}, 0, 1, Animator},\n  ControlPlacement -> Left\n]"
+  ], "Input"],
+
+  Cell["Notes", "Section"],
+  Cell["- Change \"c\" to adjust drag strength.\n- Switch to linear drag by setting \"DragLaw\" -> \"linear\" in simulateProjectile.\n- Units are SI throughout.", "Text"]
+ },
+ WindowSize -> {1200, 800},
+ WindowMargins -> {{Automatic, 0}, {Automatic, 0}},
+ StyleDefinitions -> "Default.nb"
+]

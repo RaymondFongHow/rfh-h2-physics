@@ -1,0 +1,384 @@
+% Auto-Compile LaTeX PDFs on Save
+% Requirement: latexmk installed (via TeX Live or MacTeX).
+%
+% Start the watcher from the repo root:
+%   ./watch-tex.sh
+%
+% It will build all .tex files once at startup, then watch for changes.
+% Stop it with Ctrl+C. PDFs are generated alongside each .tex file, and
+% intermediate build files are removed automatically after each build.
+
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=*}
+\setlist[itemize]{nosep}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\RoadmapSection}[1]{%
+  \section*{#1}%
+  \addcontentsline{toc}{section}{#1}%
+}
+
+\newcommand{\RoadmapChapter}[1]{%
+  \clearpage%
+  \subsection*{#1}%
+  \addcontentsline{toc}{subsection}{#1}%
+}
+
+\title{H2 Physics Learning Roadmap}
+\date{\today}
+
+\begin{document}
+\maketitle
+\clearpage
+\tableofcontents
+\clearpage
+
+\RoadmapSection{SECTION 0: MATHEMATICAL FOUNDATION}
+
+\RoadmapChapter{Chapter 0: Quantities and Analysis}
+
+\begin{itemize}
+  \item Units
+  \begin{itemize}
+    \item SI units: base units; derived units; unit prefixes
+    \item Non-SI unit system; e.g.: Gaussian units, natural units
+    \item Unit and estimation of quantities
+    \item Units and dimensions
+    \begin{itemize}
+      \item Notation for quantity dimension
+      \item Homogeneity of physical equations
+      \item Dimensional analysis
+    \end{itemize}
+  \end{itemize}
+  \item Measurements and Statistics
+  \begin{itemize}
+    \item Random and systematic errors of measurements
+    \item Precision and accuracy of statistics
+    \item Uncertainty calculations: absolute, fractional, percentage
+  \end{itemize}
+  \item Vector Algebra
+  \begin{itemize}
+    \item 2D vectors in coordinate systems
+    \begin{itemize}
+      \item Cartesian: $x$ and $y$ coordinates and orthogonal decomposition
+      \item Polar: angular and radial coordinates
+    \end{itemize}
+    \item Scalars as 1D vectors
+    \item Vector arithmetic
+    \begin{itemize}
+      \item Addition, multiplication (scalar, dot, and cross product)
+      \item Mention: vector as an $n \times 1$ matrix, and the resulting algebra
+    \end{itemize}
+    \item Unit of vectors and vector products
+    \item Mention: Complex numbers
+    \begin{itemize}
+      \item How are complex numbers similar to 2D vectors
+      \item How they are different
+    \end{itemize}
+    \item Mention: fields
+    \begin{itemize}
+      \item Quantity as a function of spatial, or spatial and time, coordinates
+      \item Superposition as vector addition
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\RoadmapSection{SECTION I: MECHANICS}
+
+\RoadmapChapter{Chapter 1: Kinematics I}
+
+\begin{itemize}
+  \item Position and its time derivatives
+  \begin{itemize}
+    \item Position, displacement, and distance
+    \item Velocity and speed
+    \item Acceleration and its magnitude
+    \item Mention: jerk and higher order derivatives and why they are less often used
+  \end{itemize}
+  \item Graphs for 1D motions and analysis
+  \begin{itemize}
+    \item Gradients as the rate of change
+    \item Areas as the accumulation
+    \item Time dependent graphs: $x$--$t$, $v$--$t$, $a$--$t$
+    \begin{itemize}
+      \item Time derivative advances the curve
+    \end{itemize}
+    \item Briefly mention time independent graphs: $v$--$x$, $a$--$v$, $a$--$x$
+    \begin{itemize}
+      \item What advances the curve here?
+    \end{itemize}
+  \end{itemize}
+  \item 1D motion with constant $\mathbf{a}$ (forces not mentioned)
+  \begin{itemize}
+    \item Equations of uniformly accelerated motion
+    \begin{itemize}
+      \item Derivation based on non-uniform motion
+      \item Extra: Energy interpretation of the time independent equation
+    \end{itemize}
+    \item Example: Free fall (with constant gravitational acceleration)
+  \end{itemize}
+\end{itemize}
+
+\RoadmapChapter{Chapter 2: Kinematics II}
+
+\begin{itemize}
+  \item 2D Motion overview
+  \begin{itemize}
+    \item Independent analysis along orthogonal directions
+    \item With an interest over curvature: tangential and centripetal $\mathbf{a}$ by vector decomposition
+  \end{itemize}
+  \item 2D motion with constant $\mathbf{a}$ (forces not mentioned)
+  \begin{itemize}
+    \item Projectile motion
+    \item Weight as force in a gravitational field ($W = mg$)
+    \item Qualitative effects of air resistance, including terminal velocity
+  \end{itemize}
+  \item 2D motion with constant centripetal $|\mathbf{a}|$
+  \begin{itemize}
+    \item Angular displacement in radians
+    \item Angular velocity $\omega$
+    \item Relationship $v = r\omega$
+    \item Common misconception: $\mathbf{a}$ is not constant for circular motion. $|\mathbf{a}|$ is.
+    \item Centripetal acceleration ($a = \omega^2 r = v^2 / r$)
+  \end{itemize}
+\end{itemize}
+
+\RoadmapChapter{Chapter 3: Dynamics I}
+
+\begin{itemize}
+  \item Mass as inertia (a qualitative mention)
+  \item N1L: $\mathbf{F} = 0 \Rightarrow \mathbf{a} = 0$
+  \item N2L: $\mathbf{F} = m\mathbf{a}$ (actually, $\mathbf{F}(t) = m(t)\mathbf{a}(t)$)
+  \item N3L: $\mathbf{F}_{\text{action}} + \mathbf{F}_{\text{reaction}} = 0$
+  \item Free-body diagrams and vector triangles
+  \item Moment of a force, torque of a couple
+  \item Conditions for equilibrium ($\mathbf{F}_{\text{net}} = 0$, $\tau_{\text{net}} = 0$) --- statics as special case
+\end{itemize}
+
+\RoadmapChapter{Chapter 4: Dynamics II}
+
+\begin{itemize}
+  \item Types of forces: gravitational, electric, magnetic, normal, friction, viscous, buoyant
+  \item Centre of gravity
+  \item Buoyancy
+  \item Friction ($f_k = -\mu_k F_N \hat{v}$, $f_{s,\max} = -\mu_s F_N \hat{v}$)
+  \item Drag (general model: polynomial with coefficients. more usually: linear / quadratic)
+  \item Hooke's law ($\mathbf{F} = -k\Delta x$)
+  \item Projectile and circular motion revisited
+  \item Basic constrained motion --- kinematic relationships; inclined planes, pulleys, connected bodies
+\end{itemize}
+
+\RoadmapChapter{Chapter 5: Energy}
+
+\begin{itemize}
+  \item Energy stores and transfers, conservation of energy
+  \item Work done by a force ($dW = \mathbf{F} \cdot d\mathbf{l} = |\mathbf{F}|\,|d\mathbf{l}|\cos\theta$)
+  \item Kinetic energy --- derivation from work, $E_k = \tfrac12 m|\mathbf{v}|^2$
+  \item Gravitational potential energy near Earth ($\Delta E_p = mg\Delta h$)
+  \item Elastic potential energy --- area under force-extension graph
+  \item Power ($P = E/t$, $P = Fv$)
+  \item Energy transmission in constrained systems
+  \item Efficiency
+\end{itemize}
+
+\RoadmapChapter{Chapter 6: Momentum}
+
+\begin{itemize}
+  \item Momentum --- $\mathbf{p} = m\mathbf{v}$
+  \item Impulse --- $\mathbf{J} = \Delta \mathbf{p}$, area under force--time graph
+  \item Conservation of momentum (Linear and Angular)
+  \item Elastic and inelastic collisions in one dimension
+  \begin{itemize}
+    \item Relative speed of approach = relative speed of separation (perfectly elastic)
+    \item Perfectly inelastic
+    \item Kinetic energy changes in collisions
+  \end{itemize}
+  \item Extra: non-heads-on collisions
+\end{itemize}
+
+\RoadmapSection{SECTION II: OSCILLATIONS AND WAVES}
+
+\RoadmapChapter{Chapter 7: Oscillations}
+
+\begin{itemize}
+  \item Free oscillations, experimental investigation
+  \item Amplitude, period, frequency, angular frequency, phase, phase difference
+  \item Defining equation of SHM ($a = -\omega^2 x$)
+  \item General solution: ...
+  \item Particular solutions: $x = x_0 \sin \omega t$, $v = v_0 \cos \omega t$, $v = \pm \omega\sqrt{x_0^2 - x^2}$
+  \item Graphical relationships ($x$--$t$, $v$--$t$, $a$--$t$, $v$--$x$, $a$--$v$, $a$--$x$)
+  \item Energy interchange in SHM
+  \item Damped oscillations (light, critical, heavy), critical damping applications
+  \item Forced oscillations and resonance --- amplitude response, sharpness, practical examples
+\end{itemize}
+
+\RoadmapChapter{Chapter 8: Waves I}
+
+\begin{itemize}
+  \item General wave equation
+  \item Sinusoidal 1D wave as a function of $x$ and $t$
+  \item Displacement, amplitude, period, frequency, wavelength, speed ($v = f\lambda$)
+  \item Graphical representation --- transverse and longitudinal
+  \item Energy transfer by waves, intensity ($I \propto \text{amplitude}^2$)
+  \item Inverse square law for point sources
+  \item Polarisation (transverse waves), Malus' law ($I = I_0 \cos^2 \theta$)
+\end{itemize}
+
+\RoadmapChapter{Chapter 9: Waves II}
+
+\begin{itemize}
+  \item Principle of superposition in 1D
+  \item Standing waves for a general wave --- formation, nodes, antinodes (pressure vs displacement for sound)
+  \item Examples: microwaves, strings, air columns, wavelength determination
+  \item Qualitative understanding: Huygens' Principle
+  \item Diffraction, interference, coherence, phase and path difference
+  \item Two-source interference --- conditions, double-slit ($ax/D = \lambda$)
+  \item Diffraction grating ($a\sin\theta = n\lambda$), wavelength determination
+  \item Single-slit diffraction --- first minima ($b\sin\theta = \lambda$)
+  \item Rayleigh criterion for resolution ($\theta \approx \lambda/b$)
+\end{itemize}
+
+\RoadmapSection{SECTION III: Gravity}
+
+\RoadmapChapter{Chapter 10: Gravity}
+
+\begin{itemize}
+  \item Concept of field: quantity as a function of coordinates
+  \item Newton's law of gravitation ($F = Gm_1m_2/r^2$) [change it to vector form]
+  \item Gravitational field strength --- definition ($g = F/m$) and point mass formula ($g = GM/r^2$)
+  \item Field lines --- uniform and radial
+  \item Gravitational potential ($\phi = -GM/r$) and potential energy ($U = -GMm/r$)
+  \item Field strength as negative potential gradient
+  \item Escape velocity --- energy considerations
+  \item Circular orbits --- equating gravitational force to centripetal force
+  \item Geostationary satellites --- characteristics and applications
+\end{itemize}
+
+\RoadmapSection{SECTION IV: Electricity \& Magnetism}
+
+\RoadmapChapter{Chapter 11: Electrostatics}
+
+\begin{itemize}
+  \item Electric field strength --- definition ($E = F/Q$) [Change everything to vector form]
+  \item Coulomb's law ($F = (1/4\pi\varepsilon_0)(Q_1Q_2/r^2)$)
+  \item Field strength for point charge ($E = (1/4\pi\varepsilon_0)(Q/r^2)$)
+  \item Field lines and equipotentials
+  \item Electric potential ($V = (1/4\pi\varepsilon_0)(Q/r)$) and potential energy ($U = (1/4\pi\varepsilon_0)(Q_1Q_2/r)$)
+  \item Field strength as negative potential gradient
+  \item Uniform fields between parallel plates ($E = V/d$), force on charge, motion of charged particles
+  \item Capacitance ($C = Q/V$)
+  \item Energy stored in a capacitor --- $U = \tfrac12 QV = \tfrac12 Q^2/C = \tfrac12 CV^2$, area under $V$--$Q$ graph
+  \item Capacitors in series and parallel
+\end{itemize}
+
+\RoadmapChapter{Chapter 12: Circuit}
+
+\begin{itemize}
+  \item Electric current ($I = Q/t$), drift velocity ($I = nAvq$)
+  \item Potential difference ($V = W/Q$)
+  \item Electrical power ($P = VI = I^2R = V^2/R$)
+  \item Distinguishing e.m.f. and p.d.
+  \item Resistance ($R = V/I$), resistivity ($R = \rho l/A$)
+  \item I--V characteristics --- ohmic resistor, diode, filament lamp, NTC thermistor
+  \item Temperature dependence of resistivity --- metals (drift velocity), semiconductors (number density)
+  \item Internal resistance --- effect on terminal p.d. and output power
+  \item Resistors in series and parallel
+  \item Potential divider circuits --- including thermistors and LDRs
+  \item Charging and discharging a capacitor --- $Q = Q_0[1 - e^{-t/\tau}]$, $Q = Q_0e^{-t/\tau}$, time constant $\tau = RC$
+\end{itemize}
+
+\RoadmapChapter{Chapter 13: Magnetostatics}
+
+\begin{itemize}
+  \item Magnetic field from currents and permanent magnets
+  \item Field lines --- long straight wire, flat circular coil, long solenoid
+  \item Biot-Savart Law
+  \item Magnetic flux density formulas: $B = \mu_0 I/(2\pi d)$, $B = \mu_0 NI/(2r)$, $B = \mu_0 nI$
+  \item Force on current-carrying conductor ($F = BIl\sin\theta$), Fleming's left-hand rule
+  \item Definition of magnetic flux density ($B = F/Il$ for $\perp$)
+  \item Force between two current-carrying conductors
+  \item Force on moving charge ($F = BQv\sin\theta$)
+  \item Deflection of charged particles in electric and magnetic fields
+  \item Velocity selection --- crossed fields
+\end{itemize}
+
+\RoadmapChapter{Chapter 14: Electromagnetic Induction}
+
+\begin{itemize}
+  \item Magnetic flux ($\Phi = BA$), flux linkage ($N\Phi$)
+  \item Experimental evidence --- changing flux induces e.m.f.
+  \item Faraday's law and Lenz's law --- direction opposes change
+  \item Simple applications
+  \item Alternating current --- period, frequency, peak value, r.m.s.
+  \item Sinusoidal AC: $x = x_0 \sin \omega t$, $I_{\text{rms}} = I_0/\sqrt{2}$, $V_{\text{rms}} = V_0/\sqrt{2}$
+  \item Mean power in resistive load --- half peak power for sine wave
+\end{itemize}
+
+\RoadmapChapter{Chapter 15: Electrical Appliances}
+
+\begin{itemize}
+  \item Half-wave rectification using a single diode
+  \item Ideal transformer --- $N_s/N_p = V_s/V_p = I_p/I_s$, principle of operation
+\end{itemize}
+
+\RoadmapSection{SECTION V: THERMAL PHYSICS}
+
+\RoadmapChapter{Chapter 16: Thermal Physics}
+
+\begin{itemize}
+  \item Thermodynamic temperature scale, absolute zero, conversion $^\circ$C to K
+  \item Ideal gas equation: $pV = NkT$
+  \item Avogadro constant, molar gas constant, Boltzmann constant
+  \item Kinetic theory assumptions
+  \item Derivation of $pV = \tfrac13 N m\langle c^2 \rangle$
+  \item Mean translational KE $= \tfrac32 kT$
+  \item Internal energy --- sum of microscopic KE and PE, determined by macroscopic state
+  \item Temperature --- proportional to mean KE
+  \item Thermal contact, thermal equilibrium, Zeroth law
+  \item Work done by a gas ($W = p\Delta V$ at constant pressure)
+  \item First law of thermodynamics ($\Delta U = Q + W$)
+  \item Specific heat capacity and specific latent heat
+\end{itemize}
+
+\RoadmapSection{SECTION VI: MODERN PHYSICS}
+
+\RoadmapChapter{Chapter 17: Quantum Physics}
+
+\begin{itemize}
+  \item Photoelectric effect --- threshold frequency, evidence for particle nature
+  \item Photon energy ($E = hf$) and momentum ($p = h/\lambda$)
+  \item Electron diffraction --- evidence for wave nature
+  \item de Broglie wavelength ($\lambda = h/p$)
+  \item Uncertainty principle
+  \item Discrete electronic energy levels in atoms (e.g. hydrogen)
+  \item Emission and absorption line spectra
+  \item Photon transitions between energy levels
+\end{itemize}
+
+\RoadmapChapter{Chapter 18: Nuclear Physics}
+
+\begin{itemize}
+  \item Rutherford $\alpha$-scattering --- existence and small size of nucleus
+  \item Nucleon number ($A$), proton number ($Z$), isotopes, notation $^A_Z X$
+  \item Spontaneous and random nature of decay, fluctuations in count rate
+  \item Background radiation --- origin and significance
+  \item $\alpha$, $\beta$, $\gamma$ radiations --- nature and properties
+  \item Activity ($A = \lambda N$), decay constant
+  \item Exponential decay: $x = x_0 e^{-\lambda t}$ (activity, undecayed nuclei, count rate)
+  \item Half-life: $t_{1/2} = \ln 2/\lambda$
+  \item Applications and hazards of radioactivity (based on half-life, penetration, ionising ability)
+  \item Nuclear equations and conservation laws (nucleon number, charge, mass-energy)
+  \item Prediction of (anti)neutrino in $\beta$ decay (conservation of momentum and energy)
+  \item Mass defect, binding energy, $E = mc^2$
+  \item Binding energy per nucleon vs nucleon number --- graph and relevance to fusion and fission
+\end{itemize}
+
+\end{document}
